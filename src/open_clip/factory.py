@@ -11,7 +11,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 import torch
 
 from .convert import convert_state_dict
-from .model import CLIP, CustomTextCLIP,CLIP_Vision,CLIP_Tabular, convert_weights_to_lp, convert_to_custom_text_state_dict,\
+from .model import CLIP, CustomTextCLIP, convert_weights_to_lp, convert_to_custom_text_state_dict,\
     resize_pos_embed, get_cast_dtype, resize_text_pos_embed, set_model_preprocess_cfg
 from .coca_model import CoCa
 from .loss import ClipLoss, DistillClipLoss, CoCaLoss, SigLipLoss, MultiPositiveClipLoss

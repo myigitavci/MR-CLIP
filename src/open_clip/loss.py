@@ -4,7 +4,6 @@ import logging
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-from statsmodels.distributions.empirical_distribution import ECDF
 try:
     import torch.distributed.nn
     from torch import distributed as dist
