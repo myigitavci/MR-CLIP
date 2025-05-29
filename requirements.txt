@@ -14,3 +14,6 @@ fsspec
 seaborn
 scikit-learn
 pandas
+numpy
+nibabel
+pydicom
