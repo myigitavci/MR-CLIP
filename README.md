@@ -6,11 +6,15 @@
 
 ## Abstract
 
-The interpretation and analysis of Magnetic Resonance Imaging scans in clinical AI systems rely on accurate understanding of image contrast. While contrast is determined by acquisition parameters stored in DICOM metadata, real-world clinical datasets often suffer from noisy, incomplete, or inconsistent metadata. Broad labels like 'T1 weighted' or 'T2-weighted' are commonly used, but offer only coarse and insufficient descriptions.
+<div align="justify">
 
-In many real-world clinical datasets, such labels are missing altogether, leaving raw acquisition parameters, such as echo time and repetition time, as the only available contrast indicators. These parameters directly govern image appearance and are critical for accurate interpretation, reliable retrieval, and integration into clinical workflows.
+**Challenge:** The interpretation and analysis of Magnetic Resonance Imaging scans in clinical AI systems rely on accurate understanding of image contrast. While contrast is determined by acquisition parameters stored in DICOM metadata, real-world clinical datasets often suffer from noisy, incomplete, or inconsistent metadata. Broad labels like 'T1 weighted' or 'T2-weighted' are commonly used, but offer only coarse and insufficient descriptions.
 
-To address these challenges, we propose MR-CLIP, a multimodal contrastive learning framework that aligns MR images with their DICOM metadata to learn contrast-aware representations, without manual labels. Trained on diverse clinical data spanning various scanners and protocols, MR-CLIP captures contrast variation across acquisitions and within scans, enabling anatomy-independent representation learning.
+**Problem:** In many real-world clinical datasets, such labels are missing altogether, leaving raw acquisition parameters, such as echo time and repetition time, as the only available contrast indicators. These parameters directly govern image appearance and are critical for accurate interpretation, reliable retrieval, and integration into clinical workflows.
+
+**Solution:** To address these challenges, we propose MR-CLIP, a multimodal contrastive learning framework that aligns MR images with their DICOM metadata to learn contrast-aware representations, without manual labels. Trained on diverse clinical data spanning various scanners and protocols, MR-CLIP captures contrast variation across acquisitions and within scans, enabling anatomy-independent representation learning.
+
+</div>
 
 ## Repository Structure
 
@@ -71,7 +75,7 @@ jupyter notebook preprocessing.ipynb
 
 1. **Download Pre-trained Weights**
    - Download the pre-trained weights from [LINK_TO_BE_ADDED]
-   - Place the weights file in the `checkpoints` directory
+   - Place the weights file in the `logs/mr_clip` directory
 
 2. **Prepare Your Test Data**
    - Ensure your test data is in CSV format with columns:
@@ -99,13 +103,12 @@ python -m open_clip_train.main \
     --beta2=0.98 \
     --warmup=2000 \
     --wd=0.2 \
-    --epochs=101 \
     --workers=8 \
     --logs=/path/to/logs \
     --device=cuda \
     --dataset-type=csv \
     --model=ViT-B-16 \
-    --name=your_test_run_name \
+    --name=mr_clip \
     --aug-cfg scale='(0.4,1.0)' \
     --resume=latest \
     --textdropout 0.1 \
@@ -119,7 +122,7 @@ Key parameters to adjust:
 - `--batch-size`: Adjust based on your GPU memory
 - `--workers`: Number of data loading workers
 - `--logs`: Directory for saving logs
-- `--name`: Name for your test run
+- `--name`: Name of the experiment under logs folder. Place the weights under this folder.
 
 ## Results
 
@@ -139,3 +142,7 @@ If you use this code in your research, please cite:
 ## Contact
 
 For questions and issues, please open an issue in this repository.
+
+## Acknowledgement
+
+Our code repository is mainly built on [OpenCLIP](https://github.com/mlfoundations/open_clip). We thank the authors for releasing their code.
