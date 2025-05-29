@@ -75,7 +75,7 @@ jupyter notebook preprocessing.ipynb
 
 1. **Download Pre-trained Weights**
    - Download the pre-trained weights from [LINK_TO_BE_ADDED]
-   - Place the weights file in the `logs/mr_clip` directory
+   - Place the weights file in the `logs/mr_clip/checkpoints` directory
 
 2. **Prepare Your Test Data**
    - Ensure your test data is in CSV format with columns:

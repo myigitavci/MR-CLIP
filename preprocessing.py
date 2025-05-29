@@ -1,34 +1,5 @@
-# %% [markdown]
-# # MR-CLIP Preprocessing Pipeline
-# 
-# This script implements a complete preprocessing pipeline for MR-CLIP, consisting of four main steps:
-# 1. NIfTI to PNG Conversion: Converts NIfTI files to PNG images with plane detection
-# 2. CSV Creation: Creates CSV files with image paths and simplified metadata text
-# 3. Data Labeling: Labels data based on parameter combinations and binned values
-# 4. Data Splitting: Merges, shuffles, and splits data into train/val/test sets
-# 
-# Directory Structure:
-# ```
-# input_directory/
-# ├── {subject_id}.nii.gz
-# └── {subject_id}.json
-# 
-# derivative/
-# ├── png_with_planes/
-# │   └── {subject_id}_{plane}_slice{number}.png
-# ├── csv_batches/
-# │   └── image_metadata_pairs_batch_{number}.csv
-# ├── labeled_data/
-# │   ├── labeled_image_metadata_pairs_batch_{number}.csv
-# │   └── label_samples.csv
-# └── splits/
-#     ├── mr_train_with_planes_shuffled_slc_120_to_220.csv
-#     ├── mr_val_with_planes_shuffled_slc_120_to_220.csv
-#     └── mr_test_with_planes_shuffled_slc_120_to_220.csv
-# ```
-
-# %%
 # Import required libraries
+
 import os
 import json
 import numpy as np
@@ -43,7 +14,31 @@ import re
 import csv
 import glob
 
-# %% [markdown]
+# ### Execute the Complete Pipeline
+# 
+# Set your input directory and the script will create a derivative folder for all outputs:
+
+# %%
+# Define the input directory containing NIfTI and JSON files
+input_directory = "/Users/yigitavci/Desktop/data/mri_nii"  # Change this to your input directory
+
+# Create derivative directory structure
+derivative_dir = os.path.join(os.path.dirname(input_directory), "derivative")
+png_dir = os.path.join(derivative_dir, "png_with_planes")
+csv_dir = os.path.join(derivative_dir, "csv_batches")
+labeled_dir = os.path.join(derivative_dir, "labeled_data")
+splits_dir = os.path.join(derivative_dir, "splits")
+
+# Create all necessary directories
+for directory in [png_dir, csv_dir, labeled_dir, splits_dir]:
+    os.makedirs(directory, exist_ok=True)
+
+# Define output file paths
+bin_intervals_file = '/Users/yigitavci/Desktop/project/AMA-CLIP/MR-CLIP/bin_intervals_et_20_rt_20.json'  # Adapt this path as needed
+final_train_file = os.path.join(splits_dir, "mr_train_with_planes_shuffled_slc_120_to_220.csv")
+final_val_file = os.path.join(splits_dir, "mr_val_with_planes_shuffled_slc_120_to_220.csv")
+final_test_file = os.path.join(splits_dir, "mr_test_with_planes_shuffled_slc_120_to_220.csv")
+
 # ## Step 1: NIfTI to PNG Conversion
 # 
 # This step converts NIfTI files to PNG images while:
@@ -151,7 +146,7 @@ def traverse_and_convert(root_dir, output_root):
     """
     for subdir, _, files in os.walk(root_dir):
         for file in files:
-            if not file.startswith("ur") and (file.endswith(".nii") or file.endswith(".nii.gz")) and "angio" not in file:
+            if file.startswith("ur") and (file.endswith(".nii") or file.endswith(".nii.gz")) and "angio" not in file:
                 nifti_path = os.path.join(subdir, file)
 
                 # Derive the output path based on input folder structure
@@ -162,8 +157,9 @@ def traverse_and_convert(root_dir, output_root):
                 # Determine the plane and process the file
                 plane = determine_plane(nifti_path)
                 process_nifti(nifti_path, output_dir, plane)
+print("Step 1: Converting NIfTI files to PNG...")
+traverse_and_convert(input_directory, derivative_dir)                
 
-# %% [markdown]
 # ## Step 2: Create CSV with Image-Metadata Pairs
 # 
 # This step creates CSV files containing:
@@ -374,8 +370,8 @@ def save_csv(data, output_csv):
         print(f"Batch saved to: {output_csv}")
     except Exception as e:
         print(f"Error saving CSV: {e}")
-
-# %% [markdown]
+print("\nStep 2: Creating CSV files with metadata...")
+find_png_and_json_in_batches(png_dir, input_directory, batch_size=20000, output_dir=csv_dir)
 # ## Step 3: Label Data with Clusters
 # 
 # This step processes the CSV files to:
@@ -571,8 +567,8 @@ def process_and_label_batches(input_dir, output_dir, bin_intervals_file):
     label_samples_output_file = os.path.join(output_dir, 'label_samples.csv')
     label_samples.to_csv(label_samples_output_file, index=False)
     print(f"Label samples saved to: {label_samples_output_file}")
-
-# %% [markdown]
+print("\nStep 3: Labeling data with clusters...")
+process_and_label_batches(csv_dir, labeled_dir, bin_intervals_file)
 # ## Step 4: Merge, Shuffle, and Split Data
 # 
 # This step:
@@ -670,13 +666,15 @@ def merge_and_shuffle_split_csv(input_folder, train_file, val_file, test_file, t
 
     # Read and process each CSV file
     df_list = [clean_text_columns(pd.read_csv(file)) for file in csv_files]
-    merged_df = pd.concat(df_list, ignore_index=True)
+    merged_df_label = pd.concat(df_list, ignore_index=True)
 
     # Extract unique image identifiers for grouping
-    merged_df["image_id"] = merged_df["filepath"].apply(extract_image_id)
-
+    merged_df_label["image_id"] = merged_df_label["filepath"].apply(extract_image_id)
+    # Keep only essential columns
+    essential_columns = ['image_id','filepath', 'text', 'label']
+    merged_df_label = merged_df_label[essential_columns]
     # Shuffle groups to ensure randomness while keeping slices together
-    grouped = merged_df.groupby("image_id")
+    grouped = merged_df_label.groupby("image_id")
     shuffled_groups = grouped.apply(lambda x: x).sample(frac=1, random_state=42).reset_index(drop=True)
 
     # Split data
@@ -707,45 +705,5 @@ def merge_and_shuffle_split_csv(input_folder, train_file, val_file, test_file, t
     print(f"Training data saved to: {train_file} ({train_df.shape[0]} rows)")
     print(f"Validation data saved to: {val_file} ({val_df.shape[0]} rows)")
     print(f"Testing data saved to: {test_file} ({test_df.shape[0]} rows)")
-
-# %% [markdown]
-# ### Execute the Complete Pipeline
-# 
-# Set your input directory and the script will create a derivative folder for all outputs:
-
-# %%
-# Define the input directory containing NIfTI and JSON files
-input_directory = "/path/to/input/directory"  # Change this to your input directory
-
-# Create derivative directory structure
-derivative_dir = os.path.join(os.path.dirname(input_directory), "derivative")
-png_dir = os.path.join(derivative_dir, "png_with_planes")
-csv_dir = os.path.join(derivative_dir, "csv_batches")
-labeled_dir = os.path.join(derivative_dir, "labeled_data")
-splits_dir = os.path.join(derivative_dir, "splits")
-
-# Create all necessary directories
-for directory in [png_dir, csv_dir, labeled_dir, splits_dir]:
-    os.makedirs(directory, exist_ok=True)
-
-# Define output file paths
-bin_intervals_file = os.path.join(derivative_dir, "bin_intervals.json")  # You need to provide this file
-final_train_file = os.path.join(splits_dir, "mr_train_with_planes_shuffled_slc_120_to_220.csv")
-final_val_file = os.path.join(splits_dir, "mr_val_with_planes_shuffled_slc_120_to_220.csv")
-final_test_file = os.path.join(splits_dir, "mr_test_with_planes_shuffled_slc_120_to_220.csv")
-
-# Execute the pipeline
-print("Step 1: Converting NIfTI files to PNG...")
-traverse_and_convert(input_directory, derivative_dir)
-
-print("\nStep 2: Creating CSV files with metadata...")
-find_png_and_json_in_batches(png_dir, input_directory, batch_size=20000, output_dir=csv_dir)
-
-print("\nStep 3: Labeling data with clusters...")
-process_and_label_batches(csv_dir, labeled_dir, bin_intervals_file)
-
 print("\nStep 4: Merging, shuffling, and splitting data...")
-merge_and_shuffle_split_csv(labeled_dir, final_train_file, final_val_file, final_test_file)
-
-print("\nPipeline completed successfully!")
-print(f"All outputs have been saved to: {derivative_dir}")
+merge_and_shuffle_split_csv(labeled_dir, final_train_file, final_val_file, final_test_file, 0.6, 0.1)
