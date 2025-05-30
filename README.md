@@ -86,32 +86,19 @@ jupyter notebook preprocessing.ipynb
 3. **Run Testing**
 ```bash
 python -m open_clip_train.main \
-    --save-frequency 1 \
-    --save-most-recent \
-    --delete-previous-checkpoint \
-    --gather-with-grad \
-    --local-loss \
-    --grad-checkpointing \
     --report-to tensorboard \
     --csv-separator=, \
     --csv-img-key filepath \
     --csv-caption-key text \
     --val-data=/path/to/your/test_data.csv \
     --batch-size=1000 \
-    --lr=1e-4 \
-    --beta1=0.9 \
-    --beta2=0.98 \
-    --warmup=2000 \
-    --wd=0.2 \
     --workers=8 \
     --logs=/path/to/logs \
     --device=cuda \
     --dataset-type=csv \
     --model=ViT-B-16 \
     --name=mr_clip \
-    --aug-cfg scale='(0.4,1.0)' \
     --resume=latest \
-    --textdropout 0.1 \
     --distance \
     --test \
     --tracepreds
