@@ -21,6 +21,7 @@ from open_clip_train.zero_shot import zero_shot_eval
 from open_clip_train.precision import get_autocast
 from transformers import AutoTokenizer
 from PIL import Image
+from collections import defaultdict, Counter
 
 # Load your tokenizer (replace 'your-model-name' with the actual model name)
 
