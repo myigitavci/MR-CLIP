@@ -124,9 +124,6 @@ If you use this code in your research, please cite:
 [Your citation information here]
 ```
 
-## License
-
-[Your license information here]
 
 ## Contact
 
