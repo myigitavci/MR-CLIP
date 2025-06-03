@@ -111,7 +111,8 @@ Key parameters to adjust:
 - `--logs`: Directory for saving logs
 - `--name`: Name of the experiment under logs folder. Place the weights under this folder.
 
-With the  `--tracepreds ` option, you can check the results of retrieved predictions case by case that is saved under  `mr_clip/checkpoints `
+With the  `--tracepreds ` option, you can check the results of retrieved predictions case by case which are saved under  `mr_clip/checkpoints `.
+
 ## Weights
 
 Will be made public upon acceptance.
