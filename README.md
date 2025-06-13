@@ -1,4 +1,4 @@
-# MR-CLIP: Efficient Metadata-Guided Learning of Robust MRI Contrast Representations
+# MR-CLIP: Efficient Metadata-Guided Learning of MRI Contrast Representations
 
 <div align="center">
   <img src="docs/mr-clip-overview.png" alt="MR-CLIP Overview" width="800"/>
@@ -121,7 +121,7 @@ Will be made public upon acceptance.
 
 If you use this code in your research, please cite:
 ```bibtex
-[Your citation information here]
+TBD
 ```
 
 
