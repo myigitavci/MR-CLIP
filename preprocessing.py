@@ -20,7 +20,7 @@ import glob
 
 # %%
 # Define the input directory containing NIfTI and JSON files
-input_directory = "/Users/yigitavci/Desktop/data/mri_nii"  # Change this to your input directory
+input_directory = "path/to/data"  # Change this to your input directory
 
 # Create derivative directory structure
 derivative_dir = os.path.join(os.path.dirname(input_directory), "derivative")
@@ -34,7 +34,7 @@ for directory in [png_dir, csv_dir, labeled_dir, splits_dir]:
     os.makedirs(directory, exist_ok=True)
 
 # Define output file paths
-bin_intervals_file = '/Users/yigitavci/Desktop/project/AMA-CLIP/MR-CLIP/bin_intervals_et_20_rt_20.json'  # Adapt this path as needed
+bin_intervals_file = './MR-CLIP/bin_intervals_et_20_rt_20.json'  # Adapt this path as needed
 final_train_file = os.path.join(splits_dir, "mr_train_with_planes_shuffled_slc_120_to_220.csv")
 final_val_file = os.path.join(splits_dir, "mr_val_with_planes_shuffled_slc_120_to_220.csv")
 final_test_file = os.path.join(splits_dir, "mr_test_with_planes_shuffled_slc_120_to_220.csv")
@@ -191,7 +191,6 @@ def simplify_text(input_str):
         "Scanner": ["Manufacturer", "Manufacturers Model Name", "Magnetic Field Strength"],
         "Protocol": ["Series Description", "Scanning Sequence", "Sequence Variant"],
         "Parameters": ["Echo Time", "Repetition Time", "Inversion Time", "Flip Angle"],
-        "Patient": ["Patient Age", "Patient Sex"],
     }
 
     # Initialize dictionary with "NONE" for all expected tags
@@ -211,7 +210,6 @@ def simplify_text(input_str):
 
     # Construct ordered output
     plane_text = f"A brain MRI, plane {tag_values['Plane']}"
-    patient_text = f"Patient (Age, Sex): ({', '.join(tag_values[tag] for tag in categories['Patient'])})"
     scanner_text = f"Scanner (Manufacturer, Model, Field Strength): ({', '.join(tag_values[tag] for tag in categories['Scanner'])})"
     protocol_text = f"Acquisition (Description, Sequence, Variant): ({', '.join(tag_values[tag] for tag in categories['Protocol'])})"
     parameters_text = f"Imaging Parameters (Echo Time, Repetition Time, Inversion Time, Flip Angle): ({', '.join(tag_values[tag] for tag in categories['Parameters'])})"
@@ -244,8 +242,6 @@ def generate_text_from_json(json_path, plane):
         "RepetitionTime",
         "InversionTime",
         "FlipAngle",
-        "PatientAge",
-        "PatientSex"
     ]
 
     try:
@@ -433,8 +429,6 @@ def parse_dicom_metadata(text):
         'Repetition Time': r'Repetition Time\s+([\d\.]+)',
         'Flip Angle': r'Flip Angle\s+([\d\.]+)',
         'Inversion Time': r'Inversion Time\s+([\d\.]+)',
-        'Patient Age': r'Patient Age\s+([^,]+)',
-        'Patient Sex': r'Patient Sex\s+([^,]+)'
     }
     
     metadata = {}
