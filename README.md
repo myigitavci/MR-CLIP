@@ -121,7 +121,15 @@ Will be made public upon acceptance.
 
 If you use this code in your research, please cite:
 ```bibtex
-TBD
+@misc{avci2025mrclipefficientmetadataguidedlearning,
+      title={MR-CLIP: Efficient Metadata-Guided Learning of MRI Contrast Representations}, 
+      author={Mehmet Yigit Avci and Pedro Borges and Paul Wright and Mehmet Yigitsoy and Sebastien Ourselin and Jorge Cardoso},
+      year={2025},
+      eprint={2507.00043},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2507.00043}, 
+}
 ```
 
 
