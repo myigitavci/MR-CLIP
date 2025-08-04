@@ -29,9 +29,6 @@
 
 ## 🗂️ Repository Structure
 
-
-## Repository Structure
-
 ```
 MR-CLIP/
 ├── preprocessing.py          # Main preprocessing script
@@ -54,7 +51,7 @@ conda activate mr-clip
 # Install dependencies
 pip install -r requirements.txt
 
-
+```
 ### 2. Data Preprocessing
 
 The preprocessing pipeline consists of four main steps:
