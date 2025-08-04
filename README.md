@@ -86,7 +86,7 @@ jupyter notebook preprocessing.ipynb
 ### 3. Testing on Your Data
 
 1. **Download Pre-trained Weights**
-   - Download the pre-trained weights from [LINK_TO_BE_ADDED]
+   - Download the pre-trained weights from [[20x20 Weights]](https://drive.google.com/file/d/1jap3aCEPrZwvFMD8LKSBB2oTYz2HgpIG/view?usp=sharing)
    - Place the weights file in the `logs/mr_clip/checkpoints` directory
 
 2. **Prepare Your Test Data**
@@ -127,7 +127,7 @@ With the  `--tracepreds ` option, you can check the results of retrieved predict
 
 ## Weights
 
-Will be made public upon acceptance.
+[20x20 Weights](https://drive.google.com/file/d/1jap3aCEPrZwvFMD8LKSBB2oTYz2HgpIG/view?usp=sharing)
 
 ## Citation
 
