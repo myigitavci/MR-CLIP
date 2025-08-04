@@ -4,6 +4,15 @@
   <img src="docs/mr-clip-overview.png" alt="MR-CLIP Overview" width="800"/>
 </div>
 
+<p align="center">
+  <a href="https://arxiv.org/abs/2507.00043">
+    <img src="https://img.shields.io/badge/arXiv-2507.00043-b31b1b.svg" alt="arXiv"/>
+  </a>
+  <a href="https://drive.google.com/file/d/1jap3aCEPrZwvFMD8LKSBB2oTYz2HgpIG/view?usp=sharing">
+    <img src="https://img.shields.io/badge/Download-Pretrained%20Weights-blue.svg" alt="Download Weights"/>
+  </a>
+</p>
+
 ## Abstract
 
 <div align="justify">
@@ -16,6 +25,11 @@
 
 </div>
 
+---
+
+## 🗂️ Repository Structure
+
+
 ## Repository Structure
 
 ```
@@ -26,8 +40,9 @@ MR-CLIP/
 ├── requirements.txt          # Python dependencies
 └── src/                     # Source code for training and evaluation
 ```
+---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### 1. Environment Setup
 
@@ -38,7 +53,7 @@ conda activate mr-clip
 
 # Install dependencies
 pip install -r requirements.txt
-```
+
 
 ### 2. Data Preprocessing
 
