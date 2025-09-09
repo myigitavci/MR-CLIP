@@ -421,6 +421,8 @@ def main(args):
 
     # initialize datasets
     tokenizer = get_tokenizer(args.model, cache_dir=args.cache_dir)
+    logging.info(f"Using tokenizer with context length {tokenizer.context_length} ")
+
     data = get_data(
         args,
         (preprocess_train, preprocess_val),

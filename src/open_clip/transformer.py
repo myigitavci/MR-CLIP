@@ -676,7 +676,7 @@ class TextTransformer(nn.Module):
 
     def __init__(
             self,
-            context_length: int = 77,
+            context_length: int = 98,
             vocab_size: int = 49408,
             width: int = 512,
             heads: int = 8,
@@ -833,7 +833,7 @@ class MultimodalTransformer(Transformer):
             width: int,
             layers: int,
             heads: int,
-            context_length: int = 77,
+            context_length: int = 98,
             mlp_ratio: float = 4.0,
             ls_init_value: float = None,
             act_layer: Callable = nn.GELU,

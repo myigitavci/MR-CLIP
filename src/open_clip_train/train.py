@@ -1184,6 +1184,7 @@ def test_metrics(model, data, start_epoch, args, tb_writer=None, tokenizer=None)
             for name, vocab in vocabulary.items()
         }
         # Load existing vocabulary if it exists
+        logging.info("Loading existing vocabulary if available...")
         vocab_file_path = os.path.join(args.checkpoint_path, "vocabulary.json")
         if os.path.exists(vocab_file_path):
             with open(vocab_file_path, "r") as f:
@@ -1199,6 +1200,7 @@ def test_metrics(model, data, start_epoch, args, tb_writer=None, tokenizer=None)
                 existing_vocab[name] = vocab
         existing_vocab["epoch"] = 'test'
         # Save the updated vocabulary to a JSON file
+        logging.info(f"Saving vocabulary to {vocab_file_path}...")
         with open(vocab_file_path, "w") as f:
             json.dump(existing_vocab, f, indent=4)
 
