@@ -7,7 +7,7 @@
         "patch_size": 16
     },
     "text_cfg": {
-        "context_length": 77,
+        "context_length": 98,
         "vocab_size": 49408,
         "width": 512,
         "heads": 8,

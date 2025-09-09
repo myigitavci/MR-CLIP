@@ -97,6 +97,7 @@ jupyter notebook preprocessing.ipynb
 
 3. **Run Testing**
 ```bash
+cd src
 python -m open_clip_train.main \
     --report-to tensorboard \
     --csv-separator=, \
