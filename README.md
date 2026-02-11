@@ -1,31 +1,7 @@
-# MR-CLIP: Efficient Metadata-Guided Learning of MRI Contrast Representations
 
-<div align="center">
-  <img src="docs/mr-clip-overview.png" alt="MR-CLIP Overview" width="800"/>
-</div>
 
-<p align="center">
-  <a href="https://arxiv.org/abs/2507.00043">
-    <img src="https://img.shields.io/badge/arXiv-2507.00043-b31b1b.svg" alt="arXiv"/>
-  </a>
-  <a href="https://drive.google.com/file/d/1jap3aCEPrZwvFMD8LKSBB2oTYz2HgpIG/view?usp=sharing">
-    <img src="https://img.shields.io/badge/Download-Pretrained%20Weights-blue.svg" alt="Download Weights"/>
-  </a>
-</p>
+# This repository is moved to https://github.com/myigitavci/MaRaI not os maintained
 
-## Abstract
-
-<div align="justify">
-
-**Challenge:** The interpretation and analysis of Magnetic Resonance Imaging scans in clinical AI systems rely on accurate understanding of image contrast. While contrast is determined by acquisition parameters stored in DICOM metadata, real-world clinical datasets often suffer from noisy, incomplete, or inconsistent metadata. Broad labels like 'T1 weighted' or 'T2-weighted' are commonly used, but offer only coarse and insufficient descriptions.
-
-**Problem:** In many real-world clinical datasets, such labels are missing altogether, leaving raw acquisition parameters, such as echo time and repetition time, as the only available contrast indicators. These parameters directly govern image appearance and are critical for accurate interpretation, reliable retrieval, and integration into clinical workflows.
-
-**Solution:** To address these challenges, we propose MR-CLIP, a multimodal contrastive learning framework that aligns MR images with their DICOM metadata to learn contrast-aware representations, without manual labels. Trained on diverse clinical data spanning various scanners and protocols, MR-CLIP captures contrast variation across acquisitions and within scans, enabling anatomy-independent representation learning.
-
-</div>
-
----
 
 ## 🗂️ Repository Structure
 
